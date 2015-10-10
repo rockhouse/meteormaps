@@ -21,3 +21,7 @@ insecure                # Allow all DB writes from clients (for prototyping)
 dburles:google-maps
 mdg:geolocation
 underscore
+meteorhacks:npm
+
+
+npm-container
