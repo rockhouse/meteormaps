@@ -8,22 +8,29 @@ if (Meteor.isClient) {
   Template.map.onCreated(function() {
     var self = this;
     this.subscribe('vehicleUpdates');
-    this.subscribe('shapes');
+    this.subscribe('routeShapes');
 
     GoogleMaps.ready('map', function(map) {
-
 
       var routeShapes = RouteShapes.find({}).fetch();
 
       _.each(routeShapes,function(routeShape) {
+        console.log('route: ');
         console.log(routeShape);
         var shapeCoordinates = [];
-        for (var key in routeShape) {
-          if (routeShape.hasOwnProperty(key)) {
-            console.log('lat: ' + routeShape[key].lat + ' lon: ' + routeShape[key].lon);
-            if (typeof routeShape[key].lat !== "undefined" ) {
-              shapeCoordinates.push({lat: routeShape[key].lat, lng: routeShape[key].lon});
-              console.log(shapeCoordinates);
+        var cursor = routeShape.sequence;
+        for (var key in cursor) {
+          if(cursor[key] === null) {
+            console.log('null hier');
+          } else {
+          //debugger;
+            var checkLat = cursor[key].hasOwnProperty('lat');
+            if ( checkLat && cursor[key].hasOwnProperty('lng')) {
+              console.log('lat: ' + cursor[key].lat + ' lon: ' + cursor[key].lng);
+              if (typeof cursor[key].lat !== "undefined" ) {
+                shapeCoordinates.push({lat: parseFloat(cursor[key].lat), lng: parseFloat(cursor[key].lng)});
+                console.log('shapecoord ' + shapeCoordinates);
+              }
             }
           }
         }
