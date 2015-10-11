@@ -30,5 +30,5 @@ Meteor.startup(function () {
     }))
   };
 
-  Meteor.setInterval(wrappedRequest, 30000);
+  Meteor.setInterval(wrappedRequest, 10000);
 });
