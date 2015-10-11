@@ -31,7 +31,6 @@ Meteor.startup(function () {
   };
 
   Meteor.setInterval(wrappedRequest, 10000);
-<<<<<<< HEAD
 
   //Check if we already have our route-shapes data
   if (RouteShapes.find().count() === 0) {
@@ -65,7 +64,4 @@ Meteor.startup(function () {
 
 
   }
-
-=======
->>>>>>> master
 });
