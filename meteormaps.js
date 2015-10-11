@@ -7,23 +7,38 @@ if (Meteor.isClient) {
 
   Template.map.onCreated(function() {
     var self = this;
+    this.subscribe('vehicleUpdates');
+    this.subscribe('shapes');
 
     GoogleMaps.ready('map', function(map) {
-      var flightPlanCoordinates = [
-        {lat: 37.772, lng: -122.214},
-        {lat: 21.291, lng: -157.821},
-        {lat: -18.142, lng: 178.431},
-        {lat: -27.467, lng: 153.027}
-      ];
-      var flightPath = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
+
+
+      var routeShapes = Shapes.find({}).fetch();
+
+      _.each(routeShapes,function(routeShape) {
+        console.log(routeShape);
+        var shapeCoordinates = [];
+        for (var key in routeShape) {
+          if (routeShape.hasOwnProperty(key)) {
+            console.log('lat: ' + routeShape[key].lat + ' lon: ' + routeShape[key].lon);
+            if (typeof routeShape[key].lat !== "undefined" ) {
+              shapeCoordinates.push({lat: routeShape[key].lat, lng: routeShape[key].lon});
+              console.log(shapeCoordinates);
+            }
+          }
+        }
+        var shapePath = new google.maps.Polyline({
+          path: shapeCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        shapePath.setMap(map.instance);
       });
 
-      flightPath.setMap(map.instance);
+
 
       var markers = {};
 
