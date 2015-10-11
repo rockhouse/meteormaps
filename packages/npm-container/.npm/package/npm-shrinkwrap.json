@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "dataStream": {
+      "version": "0.0.5",
+      "dependencies": {
+        "bufferhelper": {
+          "version": "0.2.0"
+        }
+      }
+    },
     "gtfs-realtime-bindings": {
       "version": "0.0.4",
       "dependencies": {
