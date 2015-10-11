@@ -13,7 +13,7 @@ if (Meteor.isClient) {
     GoogleMaps.ready('map', function(map) {
 
 
-      var routeShapes = Shapes.find({}).fetch();
+      var routeShapes = RouteShapes.find({}).fetch();
 
       _.each(routeShapes,function(routeShape) {
         console.log(routeShape);
