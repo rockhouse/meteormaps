@@ -1,4 +1,5 @@
 {
   "gtfs-realtime-bindings": "0.0.4",
-  "request": "2.64.0"
+  "request": "2.64.0",
+  "dataStream": "0.0.5"
 }
