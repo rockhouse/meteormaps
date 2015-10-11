@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  var MAP_ZOOM = 15;
+  var MAP_ZOOM = 10;
 
   Meteor.startup(function() {
     GoogleMaps.load();
@@ -30,50 +30,55 @@ if (Meteor.isClient) {
       // Create and move the marker when latLng changes.
       var getMarkers = VehicleUpdates.find({}).fetch();
       _.each(getMarkers,function(getMarker){
-        // If the marker doesn't yet exist, create it.*/
+        // If the marker doesn't yet exist, create it.
 
       var marker = new google.maps.Marker({
           position: new google.maps.LatLng(getMarker.position_lat, getMarker.position_lon),
           map: map.instance
         });
         markers[getMarker._id] = marker
-        //console.log(marker);
-
       });
+
+      var counter = 0;
+      var counter2 = 0;
 
       VehicleUpdates.find().observe({
         added: function(document) {
-        /*  // Create a marker for this document
+          // Create a marker for this document
           var marker = new google.maps.Marker({
-            draggable: true,
+            icon: 'https://photos-6.dropbox.com/t/2/AADLa5Npz6wLHf6xZQTw78C2I5qUsDoTPht4EG5FcCIXlg/12/7277003/png/32x32/1/_/1/2/bus.png/EM2zswUY9O8MIAIoAigD/gNBfmPxzvuGm___l6oZaQsGpbBe8JDJaobG47JMJcCo?size=1280x960&size_mode=2',
             animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(document.lat, document.lng),
             map: map.instance,
-            // We store the document _id on the marker in order
-            // to update the document within the 'dragend' event below.
-            id: document._id
-          });
-          //console.log(marker);
-
-          // This listener lets us drag markers on the map and update their corresponding document.
-          google.maps.event.addListener(marker, 'dragend', function(event) {
-            VehicleUpdates.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
+            title: document.trip_id
           });
 
           // Store this marker instance within the markers object.
-          markers[document._id] = marker;*/
+          markers[document._id] = marker;
+          counter2 += 1;
+          //console.log(counter2);
+          //console.log(document._id);
+          //console.log(markers[document._id]);
         },
 
         changed: function(newDocument, oldDocument) {
-          //console.log('here');
-          //console.log(markers);
           var posMarker = new google.maps.LatLng(newDocument.position_lat, newDocument.position_lon)
-          //console.log(newDocument._id);
-          //markers[newDocument._id];
-          //debugger;
-          markers[newDocument._id].setPosition( posMarker );
-        },
+          if (markers[newDocument._id]) {
+            markers[newDocument._id].setPosition( posMarker );
+            //console.log('goed: ' + newDocument._id);
+          } else {
+            counter += 1;
+            console.log('fout: ' + newDocument._id);
+            console.log('fout oud: ' + oldDocument._id);
+            console.log('oud: ' + oldDocument.trip_id);
+            console.log('nieuw: ' + newDocument.trip_id);
+            console.log(oldDocument);
+            console.log(newDocument);
+            console.log(counter);
+          }
 
+        },
+        /*
         removed: function(oldDocument) {
           // Remove the marker from the map
           markers[oldDocument._id].setMap(null);
@@ -84,10 +89,8 @@ if (Meteor.isClient) {
 
           // Remove the reference to this marker instance
           delete markers[oldDocument._id];
-        }
+        }*/
       });
-
-
     });
 
   });
@@ -120,5 +123,3 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
-
-Markers = new Mongo.Collection('markers');
