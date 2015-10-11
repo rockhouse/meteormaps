@@ -68,8 +68,8 @@ if (Meteor.isClient) {
         added: function(document) {
           // Create a marker for this document
           var marker = new google.maps.Marker({
-            icon: 'https://photos-6.dropbox.com/t/2/AADLa5Npz6wLHf6xZQTw78C2I5qUsDoTPht4EG5FcCIXlg/12/7277003/png/32x32/1/_/1/2/bus.png/EM2zswUY9O8MIAIoAigD/gNBfmPxzvuGm___l6oZaQsGpbBe8JDJaobG47JMJcCo?size=1280x960&size_mode=2',
-            animation: google.maps.Animation.DROP,
+            //icon: 'https://photos-6.dropbox.com/t/2/AADLa5Npz6wLHf6xZQTw78C2I5qUsDoTPht4EG5FcCIXlg/12/7277003/png/32x32/1/_/1/2/bus.png/EM2zswUY9O8MIAIoAigD/gNBfmPxzvuGm___l6oZaQsGpbBe8JDJaobG47JMJcCo?size=1280x960&size_mode=2',
+            //animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(document.lat, document.lng),
             map: map.instance,
             title: document.trip_id
