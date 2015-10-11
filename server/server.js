@@ -82,8 +82,7 @@ Meteor.startup(function () {
       var writeMongo = Meteor.bindEnvironment(function writeShapesToMongo(array) {
         RouteShapes.insert(array);
       }, "failed");
-
-  }
+      
       var wrapped = Meteor.wrapAsync(function(){
         request
         .get('http://gtfs.ovapi.nl/openov-nl/shapes.txt')
